@@ -1,5 +1,5 @@
 import java.util.*;
-class UC1
+class Employee-Wage-Computation
 {
     public static void main(String args[])
     {
