@@ -1,90 +1,73 @@
-import java.util.*;
-class Employee-Wage-Computation
-{
-    // Constants Definitions
-    private static final int IS_PART_TIME=1, IS_FULL_TIME=2;
-    private static String COMPANY_NAME;
 
-    public UC8(String companyName)
-    {
-        this.COMPANY_NAME=companyName;
+public class Employee-Wage-Computation {
+
+    static final int IS_FULL_TIME = 1;
+    static final int IS_PART_TIME = 2;
+    private int EMP_WAGE_PER_HOUR ;
+    private int FULL_TIME_HOUR ;
+    private int PART_TIME_HOUR ;
+    private int WORKING_DAYS_PER_MONTH ;
+
+    private int TOTAL_EMPLOYEE_WAGE ;
+
+
+
+    public Employee-Wage-Computation() {
     }
 
-    private int calculateWage(	int employeeID,
-                                  int partTimeHrs,
-                                  int fullTimeHrs,
-                                  int wagePerHour,
-                                  int daysWorked,
-                                  int hoursWorked	)
-    {
-        // Function description & welcome message
-        System.out.println("**********\tWelcome to Employee Wage Computation Program!\t**********");
-        System.out.println("**********\tComputing for company: "+this.COMPANY_NAME+"\t**********");
-        // Variable Definitions
-        int empHrs = 0;
-        int totalEmpHrs = 0;
-        int totalEmpWage = 0;
-        int totalWorkingDays = 0;
+    public EmployeeWage(int EMP_WAGE_PER_HOUR, int FULL_TIME_HOUR, int PART_TIME_HOUR, int WORKING_DAYS_PER_MONTH) {
+        this.EMP_WAGE_PER_HOUR = EMP_WAGE_PER_HOUR;
+        this.FULL_TIME_HOUR = FULL_TIME_HOUR;
+        this.PART_TIME_HOUR = PART_TIME_HOUR;
+        this.WORKING_DAYS_PER_MONTH = WORKING_DAYS_PER_MONTH;
+    }
 
-        // Operation
-        while(totalEmpHrs <= hoursWorked && totalWorkingDays < daysWorked)
-        {
-            totalWorkingDays++;
-            double empCheck = Math.floor(Math.random() * 10) % 3;
-            switch ((int)empCheck)
-            {
-                case IS_PART_TIME:
-                    empHrs = partTimeHrs;
-                    break;
+    public void calculateEmployeeWage() {
+
+        int empHours = 0 ;
+        int day = 1;
+        int totalWage = 0;
+        while (day < WORKING_DAYS_PER_MONTH && empHours <= 100) {
+            int dailyWage = 0;
+            int employeeCheck = (int) Math.floor(Math.random() * 10) % 3;
+            System.out.println(employeeCheck);
+            switch (employeeCheck) {
                 case IS_FULL_TIME:
-                    empHrs = fullTimeHrs;
+                    System.out.println("Employee is present");
+                    dailyWage = EMP_WAGE_PER_HOUR * FULL_TIME_HOUR;
+                    empHours += FULL_TIME_HOUR ;
+
+                    break;
+                case IS_PART_TIME:
+                    System.out.println("Employee is present");
+                    dailyWage = EMP_WAGE_PER_HOUR * PART_TIME_HOUR;
+                    empHours += PART_TIME_HOUR ;
+
                     break;
                 default:
-                    empHrs = 0;
-                    break;
+                    System.out.println("Employee is absent");
             }
-            totalEmpHrs += empHrs;
-            System.out.println("Day#: "+totalWorkingDays+"\t\tHours woked today: "+empHrs+"\tToday's Wage: "+empHrs*wagePerHour);
+            day++;
+            totalWage += dailyWage ;
+            System.out.println("Total employee hours are " + empHours);
+            System.out.println("Total wage for " + day + " day is " + totalWage);
         }
-        totalEmpWage = totalEmpHrs * wagePerHour;
-        System.out.println("Employee with eID#"+employeeID+" got total monthly wage of "+totalEmpWage+" Rs by working "+totalWorkingDays+" day(s) totalling "+totalEmpHrs+" hour(s).");
+        TOTAL_EMPLOYEE_WAGE = totalWage;
 
-        return totalEmpWage;
     }
 
-    public void readEmpToGetWage()
-    {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter employee ID: ");
-        int employeeID=sc.nextInt();
-
-        System.out.print("Enter part time hours: ");
-        int partTimeHrs=sc.nextInt();
-
-        System.out.print("Enter full time hours: ");
-        int fullTimeHrs=sc.nextInt();
-
-        System.out.print("Enter wage in Rs given per Hour : ");
-        int wagePerHour=sc.nextInt();
-
-        System.out.print("Enter number of days employee worked: ");
-        int daysWorked=sc.nextInt();
-
-        System.out.print("Enter number of hours employee worked: ");
-        int hoursWorked=sc.nextInt();
-
-        sc.close();
-
-        int employeeWage = calculateWage(employeeID, partTimeHrs, fullTimeHrs, wagePerHour, daysWorked, hoursWorked);
+    @Override
+    public String toString() {
+        return "total employee wage = " + TOTAL_EMPLOYEE_WAGE ;
     }
 
-    public static void main(String[] args)
-    {
-        UC8 DMart = new UC8("DMart");
-        DMart.readEmpToGetWage();
+    public static void main(String[] args) {
+        Employee-Wage-Computation perfios  = new Employee-Wage-Computation(35,8,5,23);
+        perfios.calculateEmployeeWage();
+        System.out.println("Perfios " + perfios.toString());
+        Employee-Wage-Computation reliance = new Employee-Wage-Computation(30,14,7,24);
+        reliance.calculateEmployeeWage();
+        System.out.println("Reliance " + reliance.toString());
 
-        // ComputeEmployeeWage Walmart = new ComputeEmployeeWage("Walmart");
-        // Walmart.readEmpToGetWage();
     }
 }
